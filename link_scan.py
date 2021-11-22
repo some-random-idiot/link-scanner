@@ -1,4 +1,3 @@
-import os
 import sys
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -25,23 +24,40 @@ def get_links(url):
             link_list[link_list.index(link)] = link[:link.index('#')]
         if '?' in link:
             link_list[link_list.index(link)] = link[:link.index('?')]
+    # Remove any duplicates.
+    link_list = list(dict.fromkeys(link_list))
+    for link in link_list:
+        print(link)
     return link_list
 
 
-# Get the url from the command line.
-url = sys.argv[1]
-print("Setting up the web driver...")
+def is_valid_url(url):
+    """Check if the given url is valid.
 
-# Set up the webdriver.
-browser_options = Options()
-browser_options.driver_path = "geckodriver.exe"
-browser_options.headless = True
-browser = webdriver.Firefox(options=browser_options)
-print("Done!")
+    Returns:
+        True if the url is valid, False otherwise.
+    """
+    pass
 
-# Get the links in the provided page.
-print("Scanning URLs...")
-links = get_links(url)
-print("Done!")
 
-browser.quit()
+if __name__ == "__main__":
+    # Get the url from the command line.
+    url = sys.argv[1]
+    print("Setting up the web driver...")
+
+    # Set up the webdriver.
+    browser_options = Options()
+    browser_options.driver_path = "geckodriver.exe"
+    browser_options.headless = True
+    browser = webdriver.Firefox(options=browser_options)
+    print("Done!")
+
+    # Get the links in the provided page.
+    print("Scanning the webpage for links...")
+    links = get_links(url)
+    print("All links found!")
+
+    # Validate acquired links.
+    print("Validating links...")
+
+    browser.quit()
