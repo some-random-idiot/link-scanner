@@ -37,7 +37,7 @@ def get_links(url: str) -> list:
     return link_list
 
 
-def is_valid_url(url: str):
+def is_valid_url(url: str) -> bool:
     """Check if the given url is valid.
 
     Returns:
